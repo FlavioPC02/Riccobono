@@ -1,7 +1,5 @@
 \subsection{Purpose}
-
-In recent years, cyclists have increasingly felt the need to travel safely within urban and suburban road networks. However, updated and reliable information on the actual conditions of cycle paths, their quality, potential obstacles, and the direct experiences of other cyclists is often lacking.
-
+In recent years, cyclists have increasingly felt the need to travel safely within urban and suburban road networks. However, updated and reliable information on the actual conditions of cycle paths, their quality, potential obstacles, and the direct experiences of other cyclists is often lacking.\\
 To address this need, a cyclists' association decided to develop Best Bike Paths (BBP), a system designed to increase safety and awareness within the cycling community.
 
 \subsubsection{Goals}
@@ -13,14 +11,44 @@ To address this need, a cyclists' association decided to develop Best Bike Paths
     \item G5 — Information available to cyclists is consistent, consolidated, and trustworthy.
 \end{itemize}
 
-The purpose of the Best Bike Paths (BBP) system is to support cyclists in making safe and informed decisions by providing reliable, shared, and verifiable information on bike routes. The system enables users to choose the best route based not only on their personal recordings but also on information contributed by other cyclists.
-
+The purpose of the Best Bike Paths (BBP) system is to support cyclists in making safe and informed decisions by providing reliable, shared, and verifiable information on bike routes. The system enables users to choose the best route based not only on their personal recordings but also on information contributed by other cyclists.\\
 The fundamental rationale for BBP's existence is therefore to improve cyclists' safety, quality of experience, and autonomy by offering a collaborative, informed, and continuously updated tool.
 
 \subsection{Scope}
-\subsection{Product Overview}
-\subsubsection{Product perspective}
-\subsubsection{Product functions}
-\subsubsection{User characteristics}
-\subsubsection{Limitations}
-\subsection{Definitions}
+The purpose of this section of the document is to clearly define the real-world context in which Best Bike Paths (BBP) operates and establish the boundary between the real world and the machine. As cyclists interact with physical paths, experience road conditions, and share knowledge with the community, the system records and processes them.
+This analysis identifies relevant elements of the cycling domain, such as the state of bike paths, user activities, and shared community knowledge, and distinguishes them from the software's internal processes.
+
+\subsubsection{World phenomena}
+\begin{itemize}
+    \item WP1: Cyclists ride along bike paths;
+    \item WP2: The physical state of bike paths changes over time (wear, potholes, obstacles, maintenance);
+    \item WP3: Environmental and meteorological conditions evolve independently of the system;
+    \item WP4: Cyclists form subjective experiences and evaluations of the routes they travel;
+    \item WP5: The cyclist’s physical movement generates measurable real-world parameters (speed, vibrations, direction changes), which are detected by the sensors of the user’s device (GPS, accelerometer, gyroscope);
+    \item WP6: Multiple cyclists independently observe different aspects and conditions of the same path.
+\end{itemize}
+
+\subsubsection{Shared phenomena}
+\begin{itemize}
+    \item World controlled:
+    \begin{itemize}
+        \item SPW1: The user enters registration data;
+        \item SPW2: The user enters information about the status of a bike path;
+        \item SPW3: The user selects a start and a finish point for route discovery;
+        \item SPW4: The device’s sensors (GPS, accelerometer, gyroscope) send measurements resulting from the cyclist’s movement to the system;
+        \item SPW5: The user confirms or corrects data automatically recorded by the system;
+        \item SPW6: The user publishes recorded information to make it available to the community.
+    \end{itemize}
+    \item Machine controlled:
+    \begin{itemize}
+        \item SPM1: The system displays any errors or confirmation of registration/login;
+        \item SPM2: The system displays information about the status of cycle paths;
+        \item SPM3: The system displays the information it has collected about the trip (average speed, distance traveled, etc.);
+        \item SPM4: The system displays recommended routes for the trip;
+        \item SPM5: The system displays data processed by sensors such as GPS for confirmation or correction.
+    \end{itemize}
+\end{itemize}
+\subsection{Definitions, Acronyms, Abbreviations}
+\subsection{Revision history}
+\subsection{Reference Documents}
+\subsection{Document Structure}
