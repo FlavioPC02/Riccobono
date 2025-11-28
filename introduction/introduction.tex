@@ -48,7 +48,77 @@ This analysis identifies relevant elements of the cycling domain, such as the st
         \item SPM5: The system displays data processed by sensors such as GPS for confirmation or correction.
     \end{itemize}
 \end{itemize}
-\subsection{Definitions, Acronyms, Abbreviations}
-\subsection{Revision history}
+\subsection{Definitions, Acronyms, and Abbreviations}
+
+\begin{description}
+    \item[BBP] Best Bike Paths, the software system described in this document.
+    \item[User] Any person who interacts with BBP to browse or use information about bike paths. Users can be registered or not registered.
+    \item[Registered User] A user who has created an account in BBP and can record trips and insert information about bike paths.
+    \item[Trip] A single cycling activity performed by a registered user and recorded by the system.
+    \item[Bike Path] A route intended for bicycle traffic, possibly including roads with low car traffic and speed limits compatible with average cycling speed.
+    \item[Path Status] A qualitative evaluation of a bike path (e.g., optimal, medium, sufficient, requires maintenance).
+    \item[World] The real environment in which cyclists, roads, bike paths and all physical and social phenomena exist independently of BBP.
+    \item[Machine] The BBP software system, including its internal data, processes and interfaces.
+    \item[Shared Phenomena] Phenomena that involve both the World and the Machine, and that cross the boundary between users/devices and BBP.
+    \item[GPS] Global Positioning System, used to obtain the geographical position of the user.
+    \item[UML] Unified Modeling Language, used to describe and model the system.
+    \item[RASD] Requirements Analysis and Specification Document.
+    \item[DD] Design Document.
+    \item[FR] Functional Requirement.
+    \item[NFR] Non-Functional Requirement.
+\end{description}
+
+
+\subsection{Revision History}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|p{7cm}|}
+\hline
+\textbf{Version} & \textbf{Date} & \textbf{Author(s)} & \textbf{Description} \\
+\hline
+0.1 & \textit{23/12/2025} & \textit{Flavio Riccobono} & First Releas. \\
+\hline
+0.2 & \textit{DD/MM/YYYY} & \textit{Name Surname} & Added goals, world/machine/shared phenomena and updated scope. \\
+\hline
+1.0 & \textit{DD/MM/YYYY} & \textit{Name Surname} & First complete version of the RASD, including scenarios, UML models and requirements. \\
+\hline
+\end{tabular}
+\caption{Revision history of this document}
+\end{table}
+
+
 \subsection{Reference Documents}
+
+The following documents and resources have been used as references for this RASD:
+
+\begin{itemize}
+    \item \textbf{Assignment RDD A.Y. 2025--2026}: ``Requirement Engineering and Design Project: Best Bike Paths (BBP)''.
+    \item Lecture slides on \textit{Requirements Engineering (RE)} for Software Engineering 2.
+    \item Lecture slides on \textit{Creating a RASD} and the RASD template provided for the course.
+    \item Lecture slides on \textit{UML for Requirements Engineering}.
+\end{itemize}
+
 \subsection{Document Structure}
+
+This document is structured as follows:
+
+\begin{itemize}
+    \item \textbf{Section 1 -- Introduction} \\
+    Introduces the BBP project, its purpose and goals, the scope of the system, the main definitions and abbreviations used throughout the document, the revision history, reference documents and the overall structure of the RASD.
+
+    \item \textbf{Section 2 -- Overall Description} \\
+    Describes the application domain and the context in which BBP operates. It includes the product perspective (scenarios, domain concepts and world/machine/shared phenomena), the main product functions, the characteristics of the intended users, and the assumptions, dependencies and constraints that affect the system.
+
+    \item \textbf{Section 3 -- Specific Requirements} \\
+    Provides a detailed specification of the functional and non-functional requirements of BBP. It includes external interface requirements, functional requirements organised around use cases and related UML diagrams, as well as performance requirements, design constraints and software system attributes.
+
+    \item \textbf{Section 4 -- Formal Analysis Using Alloy} \\
+    Presents the formal model (if provided) used to capture selected aspects of the requirements. It describes the objectives of the modelling activity, the Alloy model and the properties that are checked through it.
+
+    \item \textbf{Section 5 -- Effort Spent} \\
+    Reports the amount of effort devoted by each group member to the preparation of this document.
+
+    \item \textbf{Section 6 -- References} \\
+    Lists all bibliographic references, standards, and additional documentation cited in the RASD.
+\end{itemize}
