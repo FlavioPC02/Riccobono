@@ -1,0 +1,35 @@
+Here you can see how to include an image in your document.
+
+\begin{sidewaysfigure}
+\centering
+\includegraphics[width=\textwidth]{Images/11.png}
+\caption{\label{fig:metamodel}DICE DPIM metamodel.}
+\end{sidewaysfigure}
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{Images/11.png}
+\caption{\label{fig:metamodel2}DICE DPIM metamodel in portrait form.}
+\end{figure}
+
+\subsection{Product perspective}
+\subsubsection{Actors}
+\begin{description}
+    \item[Registered User]: A cyclist who has created an account on BBP. 
+    Registered users can record their trips, insert information about bike paths,
+    and search for routes between an origin and a destination.
+
+    \item[Non-registered User]: A user who accesses BBP without creating an account.
+    Non-registered users can only browse and query information about bike paths and
+    routes but cannot record trips or contribute new information.
+\end{description}
+\subsubsection{Scenarios}
+\paragraph{Scenario 1: Register and access BBP}
+A cyclist wants to start using BBP to keep track of their cycling activities and to consult information about bike paths. They open the application, choose to create a new account, and enter their personal data and credentials. After a successful registration, they log in and access their personal area, where they will later find their recorded trips and contributions.
+
+\paragraph{Scenario 2: Record a new trip}
+A registered user starts a cycling trip and decides to record it using BBP. Before leaving, the user opens the application, logs in, and starts a new trip recording. After completing the ride, the user stops the recording. The system stores the trip and computes basic statistics, such as total distance and average speed. The user can later review this information and use it to monitor their activities.
+\paragraph{Scenario 3: Insert information about a bike path}
+\subsection{Product functions}
+\subsection{User characteristics}
+\subsection{Assumptions, dependencies and constraints}
