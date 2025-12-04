@@ -24,47 +24,37 @@ status of the bike paths involved. The user compares the suggested routes and se
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{Example+Of+Latex+Doc/Images/classDiagram.png}
+\includegraphics[width=\textwidth]{./Images/classDiagram.png}
 \caption{\label{fig:metamodel2}BBP Class Diagram}
 \end{figure}
 
 The domain of BBP is centered around registered users, their cycling activities, the bike paths of the metropolitan area, and the information shared within the community. A \texttt{User} may record several \texttt{Trip} instances, each representing a cycling activity carried out at a specific date and time. Every trip is associated with a corresponding \texttt{TripInfo}, which summarises the performance metrics of the ride (such as total distance, duration, and average speed), and may optionally include a \texttt{WeatherInfo} record providing contextual meteorological data retrieved from an external service. The urban environment is modelled through \texttt{BikePath} entities, each describing a bicycle-friendly segment with a name, an identifier, and a length. Users can contribute information about the current conditions of bike paths by creating \texttt{PathInfo} records that include a qualitative status, a textual description, and a publishable flag; the status itself is described through the enumerated type \texttt{PathStatus}. The system also models \texttt{Route} entities, representing suggested cycling routes between an origin and a destination, each composed of one or more bike paths, reflecting how the system combines existing infrastructure to propose safe and suitable paths. Together, these entities capture the essential structure of BBP's domain, describing users, their activities, the bike network, and the shared information that supports route computation and community awareness.
 \subsubsection{State Diagram}
 \begin{figure}[H]
-    \centering
-    % Prima immagine
-    \begin{minipage}[t]{0.48\textwidth}
-        \centering
-        \includegraphics[height=6cm]{Example+Of+Latex+Doc/Images/stateDiagram.png}
-        \caption*{Immagine 1} % opzionale
-    \end{minipage}
-    \hfill
-    % Seconda immagine
-    \begin{minipage}[t]{0.48\textwidth}
-        \centering
-        \includegraphics[height=6cm]{Example+Of+Latex+Doc/Images/stateDiagram.png}
-        \caption*{Immagine 2} % opzionale
-    \end{minipage}
-    \caption{BBP state diagrams}
+\centering
+\includegraphics[width=0.4\textwidth]{./Images/stateDiagram.png}
+\caption{\label{fig:metamodel2}BBP State Diagram}
 \end{figure}
-\paragraph{State Diagram 1}
-The lifecycle of a \texttt{Trip} is characterised by a sequence of states that describe how a cycling activity is recorded and enriched with additional information. When a trip is created, it is initially in the \textit{Created} state. When the user starts recording, the trip moves to the \textit{Recording} state, during which BBP collects the data needed to compute statistics. When the user stops the recording, the trip enters the \textit{Completed} state. The system then computes the corresponding \texttt{TripInfo}, moving the trip to the \textit{Summarized} state. If weather information is available for the
+
+The lifecycle of a \texttt{Trip} is characterized by a sequence of states that describe how a cycling activity is recorded and enriched with additional information. When a trip is created, it is initially in the \textit{Created} state. When the user starts recording, the trip moves to the \textit{Recording} state, during which BBP collects the data needed to compute statistics. When the user stops the recording, the trip enters the \textit{Completed} state. The system then computes the corresponding \texttt{TripInfo}, moving the trip to the \textit{Summarized} state. If weather information is available for the
 time and area of the trip, the system attaches a \texttt{WeatherInfo} record and the trip reaches the \textit{EnrichedWithWeather} state. Both
 \textit{Summarized} (when no weather information is found) and \textit{EnrichedWithWeather} act as final states of the trip lifecycle.
-\paragraph{State Diagram 2}
 
 \subsection{Product functions}
 \paragraph{User registration and authentication}
-BBP shall allow cyclists to register or authenticate, if already registered, by providing their personal information and required credentials, such as email and password. Registered users will have access to additional features, such as recording their route and entering information about cycling routes.
-
-\paragraph{Browse bike paths and their conditions}
-BBP shall allow any user, registered or not, to specify an origin and destination to view the bike path(s) between these two points on a map. For each bike path, the system will display basic information such as its approximate location, length, and the most recent status information collected from users.
+BBP shall allow cyclists to register or authenticate, if already registered, by providing their personal information and required credentials, such as email and password. Registered users will have access to additional features, such as recording their trips and entering information about cycling routes.
 
 \paragraph{Trip recording and history management}
 BBP shall allow registered users to record their cycling activities. During a trip, the system collects the data needed to compute basic statistics. Once the recording is stopped, the system shall store the trip and present a summary including information such as total distance, duration and average speed. Users shall be able to view their past trips and related statistics.
 
 \paragraph{Route search between an origin and a destination}
 BBP shall allow users, either registered or not, to specify an origin and a destination and request bike-friendly routes connecting the two points. The system shall analyse the available bike paths and compute one or more candidate Routes by combining them into complete paths from origin to destination. Each suggested Route shall be visualised on the map together with basic information such as its approximate length and the condition of the involved bike paths.
+
+\paragraph{Map browsing and inspection of bike paths}
+BBP shall allow any user, either registered or not, to browse the map of the
+metropolitan area and inspect the available bike paths. For each bike path,
+the system shall display its location, length and the most recent publishable
+status information contributed by the community.
 
 \paragraph{Route ranking and selection}
 For each set of candidate Routes between the same origin and destination, BBP shall assign a score to every Route by combining the status of the bike paths composing it with measures of the route’s effectiveness in connecting origin and destination (e.g., total distance). The system shall present the suggested Routes ordered according to their score, allowing the user to compare them and select the one they consider most appropriate for their needs.
