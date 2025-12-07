@@ -1,5 +1,92 @@
 \subsection{External Interface}
+\subsubsection{User Interfaces}
+BBP displays allows the user to use the following interfaces:
+
+\begin{itemize}
+    \item \textbf{Login, Registration and Guest Access}\\
+    The system shall provide an interface where users can:
+    \begin{itemize}
+        \item log in by entering their credentials (email and password);
+        \item create a new account by providing the required registration data;
+        \item continue as guest, without creating an account. Guest users can use read-only features such as browsing the map, inspecting bike paths and requesting routes, but cannot record Trips or insert PathInfo.
+    \end{itemize}
+
+    \item \textbf{Home / Route Search View}\\
+    The home view shall be accessible to both registered users and guests and shall include:
+    \begin{itemize}
+        \item two input fields to specify an origin and a destination;
+        \item a command to request the computation of bike-friendly routes between these two points;
+        \item a list of suggested Routes ordered by their score, where each Route shows at least its approximate length and its score.
+    \end{itemize}
+
+    \item \textbf{Route Map View}\\
+    By selecting a Route from the list, the user is taken to a dedicated
+    map view where the chosen Route is displayed.
+    The Route map view shall:
+    \begin{itemize}
+        \item show the selected Route on a map;
+        \item visually distinguish the different bike paths composing the Route, for instance by colouring them according to their current status;
+        \item allow the user to inspect the status of an individual bike path selecting it, showing the most recent consolidated information about that path.
+    \end{itemize}
+
+    \item \textbf{Trip List and Trip Detail View}\\
+    The system shall provide a dedicated view where a registered user can:
+    \begin{itemize}
+        \item see a list of all Trips previously recorded by that user;
+        \item select a Trip to open a detail view showing its full summary, including distance, duration, average speed and, when available, associated weather information.
+    \end{itemize}
+    From the Trip list view, the user shall also be able to start recording a new Trip. While recording, a dedicated panel shall display live indicators such as elapsed time and an approximation of the distance travelled; when the recording is stopped, the Trip is stored and appears in the list.
+
+    \item \textbf{Path Information View}\\
+    The system shall provide a separate view to manage information about bike paths. In this view, a registered user shall be able to:
+    \begin{itemize}
+        \item search for a specific bike path managed by BBP;
+        \item inspect recent publishable PathInfo contributions associated with the selected bike path, including their qualitative status and textual description;
+        \item add a new PathInfo for the selected bike path by:
+              \begin{itemize}
+                  \item choosing a qualitative status (e.g.\ optimal, medium, sufficient, requires maintenance);
+                  \item optionally entering a short textual description;
+                  \item deciding whether the new information should be made publishable to the community.
+              \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Hardware Interfaces}
+BBP is designed to operate on devices equipped with basic sensing and connectivity capabilities.
+In particular, the system relies on the device’s GPS module, which provides geographical positioning data required both for recording Trips and for computing routes based on the user’s location.
+Furthermore, a network interface (such as Wi-Fi or mobile data) is required to enable communication with external services, including map providers, weather APIs and the backend used to synchronise user data.
+
+\subsubsection{Software Interfaces}
+BBP interacts with a set of external software services that support its core functionalities.
+A map service is used to visualise the metropolitan area, display bike paths and assist in computing bike-friendly routes between an origin and a destination.
+Additionally, BBP accesses an external weather service to obtain contextual meteorological information associated with recorded Trips, enriching trip summaries with temperature, conditions and other relevant data retrieved at the corresponding time and location.
+
+\subsubsection{Communication Interfaces}
+BBP relies on standard mobile communication technologies to interact with external services and synchronize data.
+All network exchanges between the application and remote servers occur via HTTPS, ensuring the secure transmission of user credentials, travel data, and route information.
+The system operates transparently over the device's available connectivity, both Wi-Fi and mobile data (4G/5G), and assumes an active internet connection whenever BBP needs to retrieve map tiles, calculate routes, access weather information, or load user-generated data.
+
 \subsection{Functional Requirements}
+\begin{itemize}
+    \item R1: The system shall allow users to register by providing the required personal data, including an email address and a password;
+    \item R2: The system shall allow registered users to log in using their credentials;
+    \item R3: The system shall allow users to continue as guests without creating an account;
+    \item  R4: The system shall prevent guest users from accessing functionalities that require authentication (Trip recording, PathInfo insertion);
+    \item R5: 
+    \item R6: 
+    \item R7: 
+    \item R8:
+    \item R9:
+    \item R10:
+    \item R11:
+    \item R12:
+    \item R13:
+    \item R14:
+    \item R15:
+    \item R16:
+\end{itemize}
+
+\paragraph{}
 \subsection{Performance Requirements}
 \subsection{Design Constraints}
 \subsection{Software System Attributes}
