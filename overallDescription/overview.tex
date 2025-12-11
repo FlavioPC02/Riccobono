@@ -11,7 +11,7 @@ A cyclist decides to create an account on BBP in order to record their trips and
 \paragraph{Scenario 3: Record a trip and view statistics}
 A registered user wants to keep track of a new cycling activity. After logging in to BBP, the user decides to record a trip before starting to ride. The system starts tracking the trip. When the ride is over, the user stops the recording. BBP stores the trip as part of the user’s personal history and computes statistics such as total distance and average speed. The user can immediately view the summary of the recorded trip and can access their list of past trips to review these statistics and monitor their cycling activities over time.
 
-\paragraph{Scenario 4: Insert and (optionally) publish information about a bike path}
+\paragraph{Scenario 4: Insert and publish information about a bike path}
 After finishing the trip, the registered user logs in to BBP and searches for the corresponding bike path in the system. BBP shows the basic information currently associated with that path. The user then chooses to add new information, including their status (e.g., optimal, medium, sufficient, requires maintenance, …) and the presence of relevant
 obstacles, for instance, potholes. Before storing the contribution, the BBP allows the user to decide whether this information should be made publishable to other users. If the user confirms publication, the new information becomes visible to all users when they 
 inspect that bike path. If the user decides not to publish it, the information is stored, but is not shown as part of the public data available to the community.
@@ -45,16 +45,13 @@ time and area of the trip, the system attaches a \texttt{WeatherInfo} record and
 BBP shall allow cyclists to register or authenticate, if already registered, by providing their personal information and required credentials, such as email and password. Registered users will have access to additional features, such as recording their trips and entering information about cycling routes.
 
 \paragraph{Trip recording and history management}
-BBP shall allow registered users to record their cycling activities. During a trip, the system collects the data needed to compute basic statistics. Once the recording is stopped, the system shall store the trip and present a summary including information such as total distance, duration and average speed. Users shall be able to view their past trips and related statistics.
+BBP shall allow registered users to create a new Trip by starting the recording of a cycling activity. During a trip, the system collects the data needed to compute basic statistics. Once the recording is stopped, the system shall store the trip and present a summary including information such as total distance, duration and average speed. Users shall be able to view their past trips and related statistics.
 
 \paragraph{Route search between an origin and a destination}
 BBP shall allow users, either registered or not, to specify an origin and a destination and request bike-friendly routes connecting the two points. The system shall analyse the available bike paths and compute one or more candidate Routes by combining them into complete paths from origin to destination. Each suggested Route shall be visualised on the map together with basic information such as its approximate length and the condition of the involved bike paths.
 
 \paragraph{Map browsing and inspection of bike paths}
-BBP shall allow any user, either registered or not, to browse the map of the
-metropolitan area and inspect the available bike paths. For each bike path,
-the system shall display its location, length and the most recent publishable
-status information contributed by the community.
+BBP shall allow any user, either registered or not, to browse the map of the metropolitan area and inspect the available bike paths. For each bike path, the system shall display its location, length, the consolidated status, and all publishable PathInfo entries contributed by the community.
 
 \paragraph{Route ranking and selection}
 For each set of candidate Routes between the same origin and destination, BBP shall assign a score to every Route by combining the status of the bike paths composing it with measures of the route’s effectiveness in connecting origin and destination (e.g., total distance). The system shall present the suggested Routes ordered according to their score, allowing the user to compare them and select the one they consider most appropriate for their needs.
