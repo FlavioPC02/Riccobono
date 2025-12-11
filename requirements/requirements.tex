@@ -1,6 +1,6 @@
 \subsection{External Interface}
 \subsubsection{User Interfaces}
-BBP displays allows the user to use the following interfaces:
+BBP allows the user to use the following interfaces:
 
 \begin{itemize}
     \item \textbf{Login, Registration and Guest Access}\\
@@ -26,7 +26,7 @@ BBP displays allows the user to use the following interfaces:
     \begin{itemize}
         \item show the selected Route on a map;
         \item visually distinguish the different bike paths composing the Route, for instance by colouring them according to their current status;
-        \item allow the user to inspect the status of an individual bike path selecting it, showing the most recent consolidated information about that path.
+        \item allow the user to inspect the status of an individual bike path by selecting it, showing the most recent consolidated information about that path and all publishable PathInfo entries associated with it.
     \end{itemize}
 
     \item \textbf{Trip List and Trip Detail View}\\
@@ -38,10 +38,10 @@ BBP displays allows the user to use the following interfaces:
     From the Trip list view, the user shall also be able to start recording a new Trip. While recording, a dedicated panel shall display live indicators such as elapsed time and an approximation of the distance travelled; when the recording is stopped, the Trip is stored and appears in the list.
 
     \item \textbf{Path Information View}\\
-    The system shall provide a separate view to manage information about bike paths. In this view, a registered user shall be able to:
+    The system shall provide a separate view to manage a registered user’s own path information. In this view, a registered user shall be able to:
     \begin{itemize}
         \item search for a specific bike path managed by BBP;
-        \item inspect recent publishable PathInfo contributions associated with the selected bike path, including their qualitative status and textual description;
+        \item inspect all PathInfo entries previously inserted by that user for the selected bike path, including both publishable and non-publishable entries, with their qualitative status and  textual description;
         \item add a new PathInfo for the selected bike path by:
               \begin{itemize}
                   \item choosing a qualitative status (e.g.\ optimal, medium, sufficient, requires maintenance);
@@ -72,21 +72,314 @@ The system operates transparently over the device's available connectivity, both
     \item R2: The system shall allow registered users to log in using their credentials;
     \item R3: The system shall allow users to continue as guests without creating an account;
     \item  R4: The system shall prevent guest users from accessing functionalities that require authentication (Trip recording, PathInfo insertion);
-    \item R5: 
-    \item R6: 
-    \item R7: 
-    \item R8:
-    \item R9:
-    \item R10:
-    \item R11:
-    \item R12:
-    \item R13:
-    \item R14:
-    \item R15:
-    \item R16:
+    \item R5: The system shall allow registered users to access their travel history;
+    \item R6: The system shall allow registered users to select a trip and view the recorded information for that trip;
+    \item R7: The system shall allow registered users to create a new trip; 
+    \item R8: The system shall allow registered users to start recording data for a new trip;
+    \item R9: The system shall allow registered users to complete a trip;
+    \item R10: While a Trip is being recorded, the system shall acquire the user's geographical position through the device's GPS;
+    \item R11: During recording, the system shall compute information such as average speed and total distance;
+    \item R12: At the end of the recording, the system shall store the Trip and its computed informations;
+    \item R13: The system shall allow all users to enter an origin and a destination;
+    \item R14: The system shall compute bike-friendly Routes connecting the origin and destination using the available bike paths;
+    \item R15: For each Route, the system shall compute a score based on the condition of the bike paths composing it and on the effectiveness of the Route;
+    \item R16: The system shall show the routes sorted by score;
+    \item R17: The system shall allow all users to select a route from those shown to view it on the map;
+    \item R18: The system shall allow all users to select a bike path on the map and view its consolidated status and all publishable PathInfo entries associated with it;
+    \item R19: The system shall allow registered users to search for a bike path in the Path Information View;
+    \item R20: The system shall allow registered users to select a bike path in the Path Information View and inspect all PathInfo entries previously inserted by that user for that bike path, including both publishable and non-publishable ones;
+    \item R21: The system shall allow registered users to enter a new PathInfo for a selected bike path;
+    \item R22: The system shall store each PathInfo and associate it with the contributing user and with the corresponding bike path;
+    \item R23: If the user marks a PathInfo as publishable, it shall become visible to all users when they inspect the corresponding bike path on the map;
+    \item R24: If the user does not mark a PathInfo as publishable, the information shall be stored but not shown to other users; it shall only be visible to the contributing user in the Path Information View.
 \end{itemize}
+\paragraph{Use Case Diagram}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\textwidth]{./Images/stateDiagram.png}
+\caption{\label{fig:metamodel2}BBP State Diagram}
+\end{figure}
 
-\paragraph{}
+\paragraph{Use cases}
+
+%======================= UC1 - User registration =======================
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|p{0.7\textwidth}|}
+\hline
+\textbf{Use Case Name} & Register User \\ \hline
+
+\textbf{Participating Actors} & Non-registered users \\ \hline
+
+\textbf{Entry Condition} & 
+The user is not authenticated and chooses the registration option in BBP. \\ \hline
+
+\textbf{Flow of Events} & 
+\begin{enumerate}[nosep, leftmargin=*]
+    \item The user selects the option to register in BBP.
+    \item The system displays a registration form asking for the required data (e.g.\ email and password).
+    \item The user fills in the form with the requested information and submits it.
+    \item The system validates the data (e.g.\ checks that the email is well-formed and not already used).
+    \item If the data are valid, the system creates a new registered user associated with the provided information.
+    \item The system confirms the successful registration to the user.
+\end{enumerate} \\ \hline
+
+\textbf{Exit Condition} & 
+The user has successfully registered to the system. \\ \hline
+
+\textbf{Exception} & 
+\begin{itemize}[nosep, leftmargin=*]
+    \item The provided data are invalid or incomplete.
+    \item The email address is already associated with an existing account.
+\end{itemize} \\ \hline
+\end{tabular}
+\end{table}
+
+%======================= UC2 - User login =======================
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|p{0.7\textwidth}|}
+\hline
+\textbf{Use Case Name} & Log In \\ \hline
+
+\textbf{Participating Actors} & Registered user \\ \hline
+
+\textbf{Entry Condition} & 
+The user has a valid BBP account and chooses the login option. \\ \hline
+
+\textbf{Flow of Events} & 
+\begin{enumerate}[nosep, leftmargin=*]
+    \item The user selects the login option in BBP.
+    \item The system displays the login form.
+    \item The user enters email and password and submits the form.
+    \item The system validates the credentials.
+    \item If the credentials are valid, the system authenticates the user.
+\end{enumerate} \\ \hline
+
+\textbf{Exit Condition} & 
+The user is authenticated and can access functionalities reserved to registered users. \\ \hline
+
+\textbf{Exception} & 
+\begin{itemize}[nosep, leftmargin=*]
+    \item The email and/or password are invalid.
+\end{itemize} \\ \hline
+\end{tabular}
+\end{table}
+
+%======================= UC3 - Continue as Guest =======================
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|p{0.7\textwidth}|}
+\hline
+\textbf{Use Case Name} & Continue as Guest \\ \hline
+
+\textbf{Participating Actors} & Non-registered users \\ \hline
+
+\textbf{Entry Condition} & 
+The user opens BBP and chooses to continue without registering or logging in. \\ \hline
+
+\textbf{Flow of Events} & 
+\begin{enumerate}[nosep, leftmargin=*]
+    \item The user selects the "Continue as guest" option.
+    \item The system grants access to BBP in guest mode.
+    \item The system enables functionalities available to guests, such as route search and route visualisation.
+\end{enumerate} \\ \hline
+
+\textbf{Exit Condition} & 
+The user is recognised as a guest and can use BBP with limited capabilities. \\ \hline
+
+\textbf{Exception} & 
+No specific exception. \\ \hline
+\end{tabular}
+\end{table}
+
+%======================= UC4 - Search Routes =======================
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|p{0.7\textwidth}|}
+\hline
+\textbf{Use Case Name} & Search Routes Between Origin and Destination \\ \hline
+
+\textbf{Participating Actors} & Non-registered user, Registered user \\ \hline
+
+\textbf{Entry Condition} & 
+The user (guest or registered) has access to BBP's home and opens the route search functionality. \\ \hline
+
+\textbf{Flow of Events} & 
+\begin{enumerate}[nosep, leftmargin=*]
+    \item The user specifies an origin and a destination.
+    \item The system validates the input (e.g.\ checks that both points are valid locations).
+    \item The system retrieves the set of bike paths relevant for the requested area.
+    \item The system computes one or more candidate Routes that connect origin and destination using available bike paths.
+    \item For each Route, the system evaluates a score based on the status of the involved bike paths and on route effectiveness.
+    \item The system displays the list of Routes, ordered by score.
+\end{enumerate} \\ \hline
+
+\textbf{Exit Condition} & 
+A list of candidate Routes between origin and destination is presented to the user. \\ \hline
+
+\textbf{Exception} & 
+\begin{itemize}[nosep, leftmargin=*]
+    \item No suitable route can be found between origin and destination.
+    \item The origin or destination cannot be resolved or are invalid.
+\end{itemize} \\ \hline
+\end{tabular}
+\end{table}
+
+%======================= UC5 - View Route on Map =======================
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|p{0.7\textwidth}|}
+\hline
+\textbf{Use Case Name} & View Route on Map and Inspect Bike Paths \\ \hline
+
+\textbf{Participating Actors} & Non-registered user, Registered user \\ \hline
+
+\textbf{Entry Condition} & 
+At least one Route between origin and destination has been computed. \\ \hline
+
+\textbf{Flow of Events} & 
+\begin{enumerate}[nosep, leftmargin=*]
+    \item The user selects one of the suggested Routes.
+    \item The system displays the selected Route on a map.
+    \item The user inspects individual bike paths composing the Route (e.g.\ by selecting or hovering them).
+    \item For each inspected bike path, the system shows its consolidated status and, when available, a short description, together with all publishable PathInfo entries associated with that bike path.
+\end{enumerate} \\ \hline
+
+\textbf{Exit Condition} & 
+The user has visualised a Route on the map and, if desired, inspected the status of its bike paths. \\ \hline
+
+\textbf{Exception} & No specific exception. \\ \hline
+\end{tabular}
+\end{table}
+
+%======================= UC6 - Record a Trip =======================
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|p{0.7\textwidth}|}
+\hline
+\textbf{Use Case Name} & Create and Record a Trip \\ \hline
+
+\textbf{Participating Actors} & Registered user \\ \hline
+
+\textbf{Entry Condition} & 
+The user is authenticated in BBP and has access to the Trips functionality. \\ \hline
+
+\textbf{Flow of Events} & 
+\begin{enumerate}[nosep, leftmargin=*]
+    \item The user selects the option to create and start recording a new Trip.
+    \item The system creates a new Trip and begins collecting positional data from the device’s GPS.
+    \item While the Trip is in progress, the system updates distance, duration and average speed.
+    \item When the cycling activity is completed, the user selects the option to stop recording.
+    \item The system stops collecting data and computes the final statistics of the Trip.
+    \item The system stores the Trip and its associated TripInfo in the user’s history.
+    \item When possible, the system retrieves contextual weather information and associates it with the Trip.
+\end{enumerate} \\ \hline
+
+\textbf{Exit Condition} & 
+A new Trip, with its summary statistics and optional weather information, is stored and available in the user’s history. \\ \hline
+
+\textbf{Exception} & No specific exception.\\ \hline
+\end{tabular}
+\end{table}
+
+%======================= UC7 - View a Trip =======================
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|p{0.7\textwidth}|}
+\hline
+\textbf{Use Case Name} & View Trip History and Trip Details \\ \hline
+
+\textbf{Participating Actors} & Registered user \\ \hline
+
+\textbf{Entry Condition} & 
+The user is authenticated and has recorded at least one Trip. \\ \hline
+
+\textbf{Flow of Events} & 
+\begin{enumerate}[nosep, leftmargin=*]
+    \item The user opens the Trip history section in BBP.
+    \item The system displays a list of Trips previously recorded by the user.
+    \item The user selects one Trip from the list.
+    \item The system shows the detailed summary of the selected Trip, including distance, duration, average speed and, when available, weather information.
+\end{enumerate} \\ \hline
+
+\textbf{Exit Condition} & 
+The user has consulted the details of at least one recorded Trip. \\ \hline
+
+\textbf{Exception} & 
+\begin{itemize}[nosep, leftmargin=*]
+    \item No Trip is available for the user (empty history).
+\end{itemize} \\ \hline
+\end{tabular}
+\end{table}
+
+%======================= UC8 - Search Bike Path =======================
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|p{0.7\textwidth}|}
+\hline
+\textbf{Use Case Name} & Search Bike Path \\ \hline
+
+\textbf{Participating Actors} & Registered user \\ \hline
+
+\textbf{Entry Condition} & 
+The user is authenticated and opens the Path Info functionality. \\ \hline
+
+\textbf{Flow of Events} & 
+\begin{enumerate}[nosep, leftmargin=*]
+    \item The user enters a bike path name.
+    \item The system retrieves and displays the bike path.
+    \item The user select the bike path.
+    \item The system confirms the selected bike path and displays, in the Path Information View, all PathInfo entries previously inserted by the user for that bike path, both publishable and non-publishable.
+\end{enumerate} \\ \hline
+
+\textbf{Exit Condition} & 
+The selected bike path is shown in the Path Information View together with 
+the user’s existing PathInfo entries and is ready to be updated with new information \\ \hline
+
+\textbf{Exception} & 
+\begin{itemize}[nosep, leftmargin=*]
+    \item No bike path matches the search criteria.
+\end{itemize} \\ \hline
+\end{tabular}
+\end{table}
+%======================= UC9 - Add PathInfo =======================
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|p{0.7\textwidth}|}
+\hline
+\textbf{Use Case Name} & Add Path Information \\ \hline
+
+\textbf{Participating Actors} & Registered user \\ \hline
+
+\textbf{Entry Condition} & 
+The user is authenticated and has selected a bike path (UC8). \\ \hline
+
+\textbf{Flow of Events} & 
+\begin{enumerate}[nosep, leftmargin=*]
+    \item The user selects the option to add new information for the selected bike path.
+    \item The system displays a form for PathInfo insertion.
+    \item The user specifies a qualitative status, optionally adds a description and chooses whether the information is publishable.
+    \item The user submits the new PathInfo.
+    \item The system validates the input.
+    \item If the input is valid, the system stores the PathInfo and associates it with the selected bike path and the user.
+    \item If the PathInfo is marked as publishable, the system makes it visible to all users when they inspect that bike path.
+\end{enumerate} \\ \hline
+
+\textbf{Exit Condition} & 
+A new PathInfo entry is stored; if publishable, it contributes to the information shown for the bike path. \\ \hline
+
+\textbf{Exception} & 
+\begin{itemize}[nosep, leftmargin=*]
+    \item The data provided by the user are invalid or incomplete.
+\end{itemize} \\ \hline
+\end{tabular}
+\end{table}
+
+\paragraph{Requirements mapping}
 \subsection{Performance Requirements}
 \subsection{Design Constraints}
 \subsection{Software System Attributes}
