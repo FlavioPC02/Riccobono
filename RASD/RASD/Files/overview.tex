@@ -1,0 +1,104 @@
+\subsection{Product perspective}
+\subsubsection{Scenarios}
+
+\paragraph{Scenario 1: Access as a non-registered user}
+A cyclist who wants to access the app without creating an account. From the homepage, users can access the general features offered by BBP, such as finding a route between a starting point and a destination, and can explore the map and inspect available bike paths, viewing information such as their approximate location and current status. However, there are limitations: users cannot record trips, save personal data, or contribute new information.
+
+\paragraph{Scenario 2: User registration}
+A cyclist decides to create an account on BBP in order to record their trips and contribute information about bike paths. After accessing BBP, the user chooses the option to register and is asked to provide the required personal data and credentials. The user enters the requested information, such as an e-mail address, a password and a nickname, and confirms the registration. BBP validates the provided data and creates a new registered user associated with that information. From this moment on, the cyclist can log in using their credentials and access additional functionalities, such as trip recording and the insertion of information about bike paths.
+
+\paragraph{Scenario 3: Record a trip and view statistics}
+A registered user wants to track a new cycling activity. After logging into BBP, the user decides to create a new trip and then begins recording the trip. Once the trip is complete, the user stops recording. BBP stores the trip in the user's personal history and calculates statistics such as total distance and average speed. The user can instantly view a summary of the recorded trip and access a list of previous trips to review these statistics and track their cycling activity over time.
+
+\paragraph{Scenario 4: Insert and publish information about a bike path}
+The registered user logs in to BBP and searches for the corresponding bike path in the system. BBP shows the basic information currently associated with that path. The user then chooses to add new information, including their status (e.g., optimal, medium, sufficient, requires maintenance, …) and the presence of relevant
+obstacles, for instance, potholes. Before storing the contribution, the BBP allows the user to decide whether this information should be made publishable to other users. If the user confirms publication, the new information becomes visible to all users when they 
+inspect that bike path. If the user decides not to publish it, the information is stored, but is not shown as part of the public data available to the community.
+
+\paragraph{Scenario 5: Search for a route between an origin and a destination}
+A user, either registered or not, wants to find a suitable route to travel by bike between two locations. The user specifies an origin and a destination, and BBP analyses the available bike paths and other relevant information to compute one or more bike-friendly routes connecting the two points. The system then presents these routes on a map, together with details such as their approximate length and the 
+status of the bike paths involved. The user compares the suggested routes and selects the one they consider most appropriate for their needs.
+
+\subsubsection{Class Diagram}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{./Images/classDiagram.png}
+\caption{\label{fig:metamodel2}BBP Class Diagram}
+\end{figure}
+
+The domain of BBP is centered around registered users, their cycling activities, the bike paths, and the information shared within the community. A \texttt{User} may record several \texttt{Trip} instances, each representing a cycling activity carried out at a specific date and time. Every trip is associated with a corresponding \texttt{TripInfo}, which summarises the performance metrics of the ride (such as total distance, duration, and average speed), and may optionally include a \texttt{WeatherInfo} record providing contextual meteorological data retrieved from an external service. The urban environment is modelled through \texttt{BikePath} entities, each describing a bicycle-friendly segment with a name, an identifier, and a length. Users can contribute information about the current conditions of bike paths by creating \texttt{PathInfo} records that include a qualitative status, a textual description, and a publishable flag; the status itself is described through the enumerated type \texttt{PathStatus}. The system also models \texttt{Route} entities, representing suggested cycling routes between an origin and a destination, each composed of one or more bike paths, reflecting how the system combines existing infrastructure to propose safe and suitable paths. Together, these entities capture the essential structure of BBP's domain, describing users, their activities, the bike network, and the shared information that supports route computation and community awareness.
+\subsubsection{State Diagram}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\textwidth]{./Images/stateDiagram.png}
+\caption{\label{fig:metamodel2}BBP State Diagram}
+\end{figure}
+
+The lifecycle of a \texttt{Trip} is characterized by a sequence of states that describe how a cycling activity is recorded and enriched with additional information. When a trip is created, it is initially in the \textit{Created} state. When the user starts recording, the trip moves to the \textit{Recording} state, during which BBP collects the data needed to compute statistics. When the user stops the recording, the trip enters the \textit{Completed} state. The system then computes the corresponding \texttt{TripInfo}, moving the trip to the \textit{Summarized} state. If weather information is available for the
+time and area of the trip, the system attaches a \texttt{WeatherInfo} record and the trip reaches the \textit{EnrichedWithWeather} state. Both
+\textit{Summarized} (when no weather information is found) and \textit{EnrichedWithWeather} act as final states of the trip lifecycle.
+
+\subsection{Product functions}
+\paragraph{User registration and authentication}
+BBP shall allow cyclists to register or authenticate, if already registered, by providing their personal information and required credentials, such as email and password. Registered users will have access to additional features, such as recording their trips and entering information about cycling routes.
+
+\paragraph{Trip recording and history management}
+BBP shall allow registered users to create a new Trip by starting the recording of a cycling activity. During a trip, the system collects the data needed to compute basic statistics. Once the recording is stopped, the system shall store the trip and present a summary including information such as total distance, duration and average speed. Users shall be able to view their past trips and related statistics.
+
+\paragraph{Route search between an origin and a destination}
+BBP shall allow users, either registered or not, to specify an origin and a destination and request bike-friendly routes connecting the two points. The system shall analyse the available bike paths and compute one or more candidate Routes by combining them into complete paths from origin to destination. Each suggested Route shall be visualised on the map together with basic information such as its approximate length and the condition of the involved bike paths.
+
+\paragraph{Map browsing and inspection of bike paths}
+BBP shall allow any user, either registered or not, to browse the map of the metropolitan area and inspect the available bike paths. For each bike path, the system shall display its location, length, the consolidated status, and all publishable PathInfo entries contributed by the community.
+
+\paragraph{Route ranking and selection}
+For each set of candidate Routes between the same origin and destination, BBP shall assign a score to every Route by combining the status of the bike paths composing it with measures of the route’s effectiveness in connecting origin and destination (e.g., total distance). The system shall present the suggested Routes ordered according to their score, allowing the user to compare them and select the one they consider most appropriate for their needs.
+
+\paragraph{Insertion and publication of path information}
+BBP shall allow registered users to insert information about the condition of specific bike paths, including a qualitative status and an optional textual description. Before storing the information, the system shall let the user decide whether the new data should be made publishable to the community. Publishable information shall be visible to all users when they inspect the corresponding bike path.
+
+\paragraph{Enrichment of trips with contextual weather information}
+When possible, BBP shall retrieve, from an external service, weather information relevant to a recorded trip (for example, temperature and general conditions) and associate it with the trip summary, so that users can review their cycling activities together with the corresponding environmental conditions.
+
+\subsection{User characteristics}
+
+\paragraph{Non-registered users}
+These users do not create a BBP account. They can browse the map, view bike paths and their conditions, and request route suggestions between a starting point and a destination. Since they are not authenticated, they cannot log trips or add information about the condition of bike paths. Their needs primarily concern quick access to information collected by BBP.
+
+\paragraph{Registered users}
+These users have created an account and authenticated in the system. In addition to browsing bike paths and requesting routes, they can record their cycling trips and insert information about the condition of specific bike paths. Their needs include accurate recording of activities, clear visualisations of trip statistics, and simple mechanisms to contribute information to the community.
+
+\paragraph{General user characteristics}
+All users interact with BBP through devices equipped with GPS and other sensors (e.g., accelerometer, gyroscope), which the system may use to collect trip-related measurements.
+
+\subsection{Assumptions, dependencies and constraints}
+\paragraph{Domain Assumptions}
+\begin{itemize}
+    \item \textbf{DA1:}
+    BBP assumes that the user’s device provides reasonably accurate GPS and sensor measurements (e.g., accelerometer, gyroscope) within normal operational error margins.
+
+    \item \textbf{DA2:}
+    The system assumes that an active internet connection is available whenever needed to retrieve map data, weather information, and to synchronise user contributions.
+
+    \item \textbf{DA3:}
+    BBP assumes that registered users provide truthful and meaningful informationwhen submitting new PathInfo records about bike path conditions.
+
+    \item \textbf{DA4:}
+    As advanced data consolidation is out of scope for single–member groups, the current status of a bike path is assumed to correspond to the most recent publishable PathInfo associated with that path.
+
+    \item \textbf{DA5:}
+    Suggested Routes are constructed by combining bike paths from the BBP inventory; non bike-friendly segments of the urban network are not explicitly modelled.
+
+    \item \textbf{DA6:}
+    BBP depends on external map and weather services, which are assumed to be reachable and functioning when invoked.
+\end{itemize}
+
+\paragraph{Dependencies and constraints}
+
+\begin{itemize}
+    \item BBP depends on external APIs for maps and weather retrieval.
+    \item The project scope for single–member groups excludes advanced
+    consolidation of multiple PathInfo into a unified status.
+    \item Only bike-friendly segments of the urban network are represented in the domain model.
+\end{itemize}
