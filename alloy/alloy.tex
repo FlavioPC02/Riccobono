@@ -1,0 +1,127 @@
+\subsection{Signatures}
+\begin{lstlisting}[caption={},label={lst:alloy-signatures}]
+sig User {}
+sig BikePath {}
+
+// Qualitative condition of a bike path
+enum Status { optimal, medium, sufficient, requiresMaintenance }
+
+// Visibility of a PathInfo (publishable or personal-only)
+abstract sig Visibility {}
+one sig Public, Private extends Visibility {}
+
+// User-contributed information on a bike path (mutable over time)
+var sig PathInfo {
+  var author : one User,
+  var path : one BikePath,
+  var status : one Status,
+  var vis : one Visibility,
+  var t : one Int          // logical timestamp
+}
+\end{lstlisting}
+
+\subsection{Facts}
+\begin{lstlisting}[caption={},label={lst:alloy-facts}]
+fact UniqueTimePerPath {
+  always {
+    all b: BikePath, ti: Int |
+      lone { pi: PathInfo | pi.path = b and pi.t = ti }
+  }
+}
+\end{lstlisting}
+
+\subsection{Functions and Predicates}
+\begin{lstlisting}[caption={},label={lst:alloy-functions}]
+// Predicate: pi is the latest publishable PathInfo on its path
+pred isLatestPublishable[pi: PathInfo] {
+  pi.vis = Public
+  no pj: PathInfo |
+     pj.path = pi.path and pj.vis = Public and pj.t > pi.t
+}
+
+// Consolidated status of a bike path (current state)
+fun consolidated[b: BikePath]: lone Status {
+  { s: Status |
+      some pi: PathInfo |
+        pi.path = b and isLatestPublishable[pi] and pi.status = s
+  }
+}
+\end{lstlisting}
+
+\newpage
+\subsection{Assertions}
+\begin{lstlisting}[caption={},label={lst:alloy-assertions}]
+assert ConsolidatedUsesLatestPublic {
+  always {
+    all b: BikePath |
+      (some pi: PathInfo | pi.path = b and pi.vis = Public)
+        implies some lp: PathInfo |
+                  lp.path = b and isLatestPublishable[lp]
+                  and consolidated[b] = lp.status
+  }
+}
+
+assert PrivateDoesNotAffectConsolidation {
+  always {
+    all b: BikePath, pri: PathInfo |
+      pri.path = b and pri.vis = Private
+        implies consolidated[b] in
+                { s: Status | some pi: PathInfo |
+                                 pi.path = b and isLatestPublishable[pi]
+                                 and s = pi.status }
+  }
+}
+
+assert NoneIfNoPublic {
+  always {
+    all b: BikePath |
+      no { pi: PathInfo | pi.path = b and pi.vis = Public }
+        implies no consolidated[b]
+  }
+}
+
+assert ConsolidatedDefinedIffPublic { 
+  always {
+    all b: BikePath |
+      (some pi: PathInfo | pi.path = b and pi.vis = Public)
+        iff (some consolidated[b])
+  }
+}
+
+assert LatestPublishableIsUnique { 
+  always {
+    all b: BikePath |
+      lone { pi: PathInfo | pi.path = b and isLatestPublishable[pi] }
+  }
+}
+\end{lstlisting}
+
+\subsection{Predicates}
+\begin{lstlisting}[caption={},label={lst:alloy-predicates}]
+pred addPathInfo[u: User, b: BikePath, s: Status, v: Visibility, time: Int] {
+  some pi: (PathInfo' - PathInfo) |
+    pi.author' = u and
+    pi.path'   = b and
+    pi.status' = s and
+    pi.vis'    = v and
+    pi.t'      = time}\end{lstlisting}
+
+\subsection{Run Show}
+Following are some models of the system obtained by running the model on Alloy Analyzer.
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{./Images/alloy/1.png}
+\caption{\label{fig:metamodel2} Step 1}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{./Images/alloy/2.png}
+\caption{\label{fig:metamodel2} Step 2}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{./Images/alloy/3.png}
+\caption{\label{fig:metamodel2}Step 3}
+\end{figure}
